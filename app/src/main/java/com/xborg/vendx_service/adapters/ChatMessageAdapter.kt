@@ -35,7 +35,7 @@ class ChatMessageAdapter(
 
         holder.text.text = chatMessage.text
 
-        val sfd = SimpleDateFormat("HH:mm")
+        val sfd = SimpleDateFormat("hh:mm a")
         holder.time.text = sfd.format(chatMessage.time.toDate());
 
         holder.userId = chatMessage.userId
