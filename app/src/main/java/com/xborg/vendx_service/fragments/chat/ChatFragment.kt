@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xborg.vendx_service.R
+import com.xborg.vendx_service.SharedViewModel
 import com.xborg.vendx_service.adapters.ChatMessageAdapter
 import kotlinx.android.synthetic.main.chat_fragment.*
 
@@ -29,6 +30,8 @@ class ChatFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        SharedViewModel.loadChatMessageFragment.value = false
 
         val viewModelFactory = ChatViewModelFactory(activity!!.application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(ChatViewModel::class.java)
@@ -59,7 +62,6 @@ class ChatFragment : Fragment() {
             }
 
         }
-
     }
 
 }

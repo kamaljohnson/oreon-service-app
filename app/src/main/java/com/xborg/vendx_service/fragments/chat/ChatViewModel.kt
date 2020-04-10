@@ -8,6 +8,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.xborg.vendx_service.database.ChatMessage
+import com.xborg.vendx_service.fragments.home.HomeViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,7 +24,7 @@ class ChatViewModel (
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
 
     val chats = MutableLiveData<ArrayList<ChatMessage>>()
-    private var userId: String = "2"    //TODO: get the selected userId from home
+    private var userId: String = ""    //TODO: get the selected userId from home
 
     init {
         autoLoadChats()
@@ -32,6 +33,8 @@ class ChatViewModel (
     fun autoLoadChats() {
 
         chats.postValue(ArrayList())
+
+        userId = HomeViewModel.selectedRoomUserId.value!!
 
         db.collection("rooms")
             .document(userId)
@@ -67,7 +70,7 @@ class ChatViewModel (
         chatMessage["time"] = Timestamp.now()
 
         db.collection("rooms")
-            .document("2")
+            .document(userId)
             .collection("messages")
             .add(chatMessage)
             .addOnSuccessListener { documentReference ->
